@@ -24,6 +24,8 @@ This requires [chromedriver](https://chromedriver.chromium.org/downloads) to eit
 
 Make sure the version of chromedriver matches your version of Chrome :) 
 
+For other browsers like firefox get the appropriate driver (Firefox's driver is geckodriver which is available [here](https://github.com/mozilla/geckodriver/releases)).
+
 ### Java
 You need to have a local installation of Java since Selenium depends on it to be able to execute. 
 

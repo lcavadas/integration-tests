@@ -305,6 +305,7 @@ var _init = function () {
       console.log('\t--url: Specify the url against which to run the tests. Defaults to --url=http://dev.infinity-app.io');
       console.log('\t--path: Specify an initial path to be used in conjunction with the url as the init browser location');
       console.log('\t--reset: Specify the the path to be used to reset the functional data. [Currently disabled]');
+      console.log('\t--browserName: Specify the browser to use. e.g. --browserName=chrome (default), --browserName==firefox ');
       console.log('\t--[X]=[Y]: Specifies the capability [X] with value [Y] for the browser:');
       console.log('\t\t For a comprehensive list of the valid properties go to https://www.browserstack.com/automate/capabilities');
 
