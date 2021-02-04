@@ -24,8 +24,11 @@ var _getDriver = function () {
     .withCapabilities(capabilities)
     .build();
 
-  var dimension = capabilities.resolution.split('x');
-  driver.manage().window().setSize(+dimension[0], +dimension[1]);
+  if (capabilities.resolution.length) {
+    var dimension = capabilities.resolution.split('x');
+    driver.manage().window().setSize(+dimension[0], +dimension[1]);
+  }
+
   return driver;
 };
 
@@ -303,6 +306,7 @@ var _init = function () {
       console.log('Options:');
       console.log('\t--file: Specify the feature file you would like to run, e.g. --file=functional/test.feature');
       console.log('\t--url: Specify the url against which to run the tests. Defaults to --url=http://dev.infinity-app.io');
+      console.log('\t--server: Specify the url of the selenium server to use to run the tests (e.g. http://hub-cloud.browserstack.com/wd/hub). Defaults to --server=http://localhost:4444/wd/hub');
       console.log('\t--path: Specify an initial path to be used in conjunction with the url as the init browser location');
       console.log('\t--reset: Specify the the path to be used to reset the functional data. [Currently disabled]');
       console.log('\t--browserName: Specify the browser to use. e.g. --browserName=chrome (default), --browserName==firefox');
@@ -314,6 +318,8 @@ var _init = function () {
       baseUrl = val.substring(6);
     } else if (val.indexOf('--path') === 0) {
       basePath += val.substring(7);
+    } else if (val.indexOf('--server') === 0) {
+      seleniumServerAddress = val.substring(9);
     } else if (val.indexOf('--') === 0 && val.indexOf('=') > 0) {
       var parts = val.substring(2).split('=');
       capabilities[parts[0]] = parts[1];
@@ -323,7 +329,10 @@ var _init = function () {
   if (!baseUrl) {
     baseUrl = 'http://dev.infinity-app.io';
   }
-  seleniumServerAddress = 'http://localhost:4444/wd/hub';
+  if (!seleniumServerAddress) {
+    seleniumServerAddress = 'http://localhost:4444/wd/hub';
+  }
+
   return _getDriver();
 };
 

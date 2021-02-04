@@ -42,8 +42,19 @@ You need to have a local installation of Java since the local Selenium server de
 #### 2 - Launch the selenium server
 `java -jar selenium-server-standalone-3.11.0.jar`
 
-#### 3 - Run the tests
+### Local execution
+
 `node_modules/gulp/bin/gulp.js functional`
+
+### Running on browserstack
+
+This example will run on latest Edge browser on a windows 10 machine: 
+
+`node_modules/gulp/bin/gulp.js functional --browserstack.user=XXXXXXXX --browserstack.key=XXXXXXXX --os=Windows --os_version 10 --browser=Edge --browser_version=latest --browserstack.local=false --browserstack.selenium_version=3.5.2 --server=http://hub-cloud.browserstack.com/wd/hub`
+
+This example will run on a real iPhone12 Pro with iOS 14
+
+`node_modules/gulp/bin/gulp.js functional --browserstack.user=XXXXXXXX --browserstack.key=XXXXXXXX  --os_version 14 --device="iPhone 12 Pro" --real_mobile=true --browserstack.local=false --resolution= --browserstack.selenium_version=3.5.2 --server=http://hub-cloud.browserstack.com/wd/hub`
 
 ### More
 
