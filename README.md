@@ -14,6 +14,8 @@ The selenium translation from Gherkin is done in `functional/support/helper.js`
 
 ### Dependencies
 
+Note that if you plan on using browserstack or a similar service you don't need chromedriver nor Java as this is managed by those services.
+
 ### Node
 
 Nodejs is required. Please install one if you don't have one already
@@ -27,7 +29,8 @@ Make sure the version of chromedriver matches your version of Chrome :)
 For other browsers like firefox get the appropriate driver (Firefox's driver is geckodriver which is available [here](https://github.com/mozilla/geckodriver/releases)).
 
 ### Java
-You need to have a local installation of Java since Selenium depends on it to be able to execute. 
+
+You need to have a local installation of Java since the local Selenium server depends on it to be able to execute.
 
 ## Running
 
