@@ -1,0 +1,32 @@
+{
+  "name": "integration-tests",
+  "version": "0.0.1-SNAPSHOT",
+  "description": "JS Integration Tests",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lcavadas/integration-tests.git"
+  },
+  "license": "UNLICENSED",
+  "jshintConfig": {
+    "bitwise": true,
+    "curly": true,
+    "eqeqeq": true,
+    "forin": true,
+    "latedef": true,
+    "noarg": true,
+    "noempty": true,
+    "nonew": true,
+    "undef": true,
+    "unused": true,
+    "browser": true
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "jshint": "^2.11.1",
+    "gulp-cucumber": "^0.0.23",
+    "cucumber": "^3.0.3",
+    "selenium-webdriver": "^3.5.0",
+    "cucumber-junit": "^1.7.0",
+    "cucumber-pretty": "^0.0.5"
+  }
+}
