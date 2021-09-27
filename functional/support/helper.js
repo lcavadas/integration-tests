@@ -19,10 +19,25 @@ var _getSelectorMapping = function (description) {
 };
 
 var _getDriver = function () {
-  driver = new webDriver.Builder()
+  let builder = new webDriver.Builder()
     .usingServer(seleniumServerAddress)
-    .withCapabilities(capabilities)
-    .build();
+    .withCapabilities(capabilities);
+
+  if (capabilities.headless) {
+    if (capabilities.browserName === 'chrome') {
+      const chrome = require('selenium-webdriver/chrome');
+      let options = new chrome.Options();
+      options.headless();
+      builder.setChromeOptions(options);
+    } else if (capabilities.browserName === 'firefox') {
+      const firefox = require('selenium-webdriver/firefox');
+      let options = new firefox.Options();
+      options.headless();
+      builder.setChromeOptions(options);
+    }
+  }
+
+  driver = builder.build();
 
   if (capabilities.resolution.length) {
     var dimension = capabilities.resolution.split('x');
@@ -33,8 +48,19 @@ var _getDriver = function () {
 };
 
 var _sendToInput = function (text, selector, next) {
+  let realSelector = _getSelectorMapping(selector);
+  if (realSelector.indexOf('iframe') !== -1) {
+    let parts = realSelector.split('iframe');
+    let frame = parts.splice(0, 1)[0] + 'iframe';
+    let remainder = parts.join('iframe');
+    driver.findElement(webDriver.By.css(frame)).then(function (iframe) {
+      driver.switchTo().frame(iframe).then(() => _sendToInput(text, remainder, () => {
+        driver.switchTo().defaultContent().then(next);
+      }));
+    })
+  }
   // console.log('Typing "' + text + '" into "' + selector + '"');
-  driver.findElement(webDriver.By.css(_getSelectorMapping(selector))).then(function (element) {
+  driver.findElement(webDriver.By.css(realSelector)).then(function (element) {
     // console.log('\tElement found, typing "' + text + '"');
     element.clear().then(function () {
       element.sendKeys(text).then(function () {
@@ -336,6 +362,10 @@ var _init = function () {
   return _getDriver();
 };
 
+var _debugger = function () {
+  console.log('debugger');
+};
+
 module.exports = {
   init: _init,
   waitForReady: _waitForReady,
@@ -353,6 +383,7 @@ module.exports = {
   countElements: _countElements,
   assertText: _assertText,
   assertAnyElementText: _assertAnyElementText,
-  assertValue: _assertValue
+  assertValue: _assertValue,
+  debugger: _debugger
   // logout: _logout
 };

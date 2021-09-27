@@ -58,4 +58,10 @@ defineSupportCode(function ({setWorldConstructor, When, Before, After}) {
       });
     });
   });
+
+  When(/^I debug$/, helper.debugger);
+
+  When(/^I leave the window for the human$/, function () {
+    process.exit(0)
+  });
 });

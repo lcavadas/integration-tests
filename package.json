@@ -28,5 +28,8 @@
     "selenium-webdriver": "^3.5.0",
     "cucumber-junit": "^1.7.0",
     "cucumber-pretty": "^0.0.5"
+  },
+  "dependencies": {
+    "process": "^0.11.10"
   }
 }
