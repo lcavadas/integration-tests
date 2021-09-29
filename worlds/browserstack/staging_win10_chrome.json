@@ -4,6 +4,7 @@
   "browser": "Chrome",
   "browser_version": "latest",
   "browserstack.local": false,
+  "browserstack.networkLogs": true,
   "browserstack.selenium_version": "3.14.0",
   "seleniumServerAddress": "http://hub-cloud.browserstack.com/wd/hub"
 }
