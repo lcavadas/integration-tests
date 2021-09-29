@@ -1,10 +1,30 @@
 {
-  "name": "integration-tests",
+  "name": "frontend",
   "version": "0.0.1-SNAPSHOT",
-  "description": "JS Integration Tests",
+  "description": "JS Functional Tests",
   "repository": {
     "type": "git",
     "url": "https://github.com/lcavadas/integration-tests.git"
+  },
+  "scripts": {
+    "generateCommit": "./generateCommitJson.sh",
+    "start_selenium": "java -jar selenium-server-standalone-3.11.0.jar &> /dev/null &",
+    "stop_selenium": "kill $(lsof -i :4444 -sTCP:LISTEN | awk 'NR > 1 {print $2}')",
+    "local_chrome": "yarn start_selenium ; sleep 1 && cucumber-js --require step_definitions/**/*.js -f node_modules/cucumber-pretty features/**/*.feature --world-parameters \"$(jq -s add worlds/local_chrome.json -c)\" ; yarn stop_selenium",
+    "local_firefox": "yarn start_selenium ; sleep 1 && cucumber-js --require step_definitions/**/*.js -f node_modules/cucumber-pretty features/**/*.feature --world-parameters \"$(jq -s add worlds/local_firefox.json)\" ; yarn stop_selenium",
+    "staging_chrome": "yarn start_selenium ; sleep 1 && cucumber-js --require step_definitions/**/*.js -f node_modules/cucumber-pretty features/**/*.feature --world-parameters \"$(jq -s add worlds/staging_chrome.json -c)\" ; yarn stop_selenium",
+    "staging_firefox": "yarn start_selenium ; sleep 1 && cucumber-js --require step_definitions/**/*.js -f node_modules/cucumber-pretty features/**/*.feature --world-parameters \"$(jq -s add worlds/staging_firefox.json)\" ; yarn stop_selenium",
+    "local": "yarn local_chrome",
+    "staging": "yarn staging_chrome",
+    "browserstack_staging_win10_chrome": "yarn generateCommit && cucumber-js --require step_definitions/**/*.js -f node_modules/cucumber-pretty features/**/*.feature --world-parameters \"$(jq -s add worlds/browserstack/commit.json worlds/browserstack/staging_win10_chrome.json)\"",
+    "browserstack_staging_win10_firefox": "yarn generateCommit && cucumber-js --require step_definitions/**/*.js -f node_modules/cucumber-pretty features/**/*.feature --world-parameters \"$(jq -s add worlds/browserstack/commit.json worlds/browserstack/staging_win10_firefox.json)\"",
+    "browserstack_staging_win10_edge": "yarn generateCommit && cucumber-js --require step_definitions/**/*.js -f node_modules/cucumber-pretty features/**/*.feature --world-parameters \"$(jq -s add worlds/browserstack/commit.json worlds/browserstack/staging_win10_edge.json)\"",
+    "browserstack_staging_macos_chrome": "yarn generateCommit && cucumber-js --require step_definitions/**/*.js -f node_modules/cucumber-pretty features/**/*.feature --world-parameters \"$(jq -s add worlds/browserstack/commit.json worlds/browserstack/staging_macos_chrome.json)\"",
+    "browserstack_staging_macos_firefox": "yarn generateCommit && cucumber-js --require step_definitions/**/*.js -f node_modules/cucumber-pretty features/**/*.feature --world-parameters \"$(jq -s add worlds/browserstack/commit.json worlds/browserstack/staging_macos_firefox.json)\"",
+    "browserstack_staging_macos_edge": "yarn generateCommit && cucumber-js --require step_definitions/**/*.js -f node_modules/cucumber-pretty features/**/*.feature --world-parameters \"$(jq -s add worlds/browserstack/commit.json worlds/browserstack/staging_macos_edge.json)\"",
+    "browserstack_staging_macos_safari": "yarn generateCommit && cucumber-js --require step_definitions/**/*.js -f node_modules/cucumber-pretty features/**/*.feature --world-parameters \"$(jq -s add worlds/browserstack/commit.json worlds/browserstack/staging_macos_safari.json)\"",
+    "browserstack_staging": "yarn staging_win10_chrome && yarn staging_win10_firefox && yarn staging_win10_edge && yarn staging_macos_chrome && yarn staging_macos_firefox && yarn staging_macos_safari",
+    "ci": "./generateCommitJson.sh && PERCY_TOKEN=613aac074171cc0e7fb48de1f17eb8cde19970fd90cf9a114726cda71a1ec6c3 percy exec -- cucumber-js --require step_definitions/**/*.js -f node_modules/cucumber-pretty features/**/*.feature --world-parameters \"$(jq -s add worlds/browserstack/commit.json worlds/ci.json)\""
   },
   "license": "UNLICENSED",
   "jshintConfig": {
@@ -23,13 +43,10 @@
   "devDependencies": {
     "gulp": "^4.0.2",
     "jshint": "^2.11.1",
-    "gulp-cucumber": "^0.0.23",
-    "cucumber": "^3.0.3",
     "selenium-webdriver": "^3.5.0",
-    "cucumber-junit": "^1.7.0",
-    "cucumber-pretty": "^0.0.5"
-  },
-  "dependencies": {
-    "process": "^0.11.10"
+    "cucumber": "^6.0.5",
+    "cucumber-pretty": "6.0.0",
+    "@percy/cli": "^1.0.0-beta.68",
+    "@percy/selenium-webdriver": "^1.0.0"
   }
 }

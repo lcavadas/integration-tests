@@ -1,0 +1,9 @@
+{
+  "os": "OS X",
+  "os_version": "Big Sur",
+  "browser": "Firefox",
+  "browser_version": "latest",
+  "browserstack.local": false,
+  "browserstack.selenium_version": "3.14.0",
+  "seleniumServerAddress": "http://hub-cloud.browserstack.com/wd/hub"
+}

@@ -1,0 +1,9 @@
+{
+  "os": "Windows",
+  "os_version": 10,
+  "browser": "Chrome",
+  "browser_version": "latest",
+  "browserstack.local": false,
+  "browserstack.selenium_version": "3.14.0",
+  "seleniumServerAddress": "http://hub-cloud.browserstack.com/wd/hub"
+}
