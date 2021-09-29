@@ -4,21 +4,22 @@ This is a sample project for integration tests using Selenium and Cucumber
 
 ## Intro
 
-The tests are written with Gherkin with a `.feature` extension. There is a sample available under `functional/features`
+The tests are written with Gherkin with a `.feature` extension. There are some samples available under `functional/features`
 
-The steps are defined in `functional/step_definitions/generic.js`
+The steps are defined in `step_definitions/generic.js`
 
-The selenium translation from Gherkin is done in `functional/support/helper.js` 
+The selenium translation from Gherkin is done in `support/helper.js` 
 
 ## Instructions
 
 ### Dependencies
 
-Note that if you plan on using browserstack or a similar service you don't need chromedriver nor Java as this is managed by those services.
+Note that if you plan on using browserstack or a similar service you don't need chromedriver nor Java as this is managed by those services. 
+You will however need the `jq` command line tool. If you're a brew user just run `brew install jq`
 
 ### Node
 
-Nodejs is required. Please install one if you don't have one already
+Nodejs is required. Please install one if you don't have one already. The .nvmrc stores which version should be used.
 
 ### Chromedriver
 
@@ -37,27 +38,26 @@ You need to have a local installation of Java since the local Selenium server de
 ### Setup
 
 #### 1 - Install the node dependencies
-`npm install`
+Make sure you have yarn installed on the node version you're running. You can install it by running `npm install -g yarn`
+
+Then install the dependencies by exevuting
+`yarn`
 
 #### 2 - Launch the selenium server
 `java -jar selenium-server-standalone-3.11.0.jar`
+or 
+`yarn start_selenium` to start the selenium server and `yarn stop_selenium` to stop it.
 
 ### Local execution
 
-`node_modules/gulp/bin/gulp.js functional`
+`yarn staging` will run the tests against the staging environment.
 
 ### Running on browserstack
 
 This example will run on latest Edge browser on a windows 10 machine: 
 
-`node_modules/gulp/bin/gulp.js functional --browserstack.user=XXXXXXXX --browserstack.key=XXXXXXXX --os=Windows --os_version 10 --browser=Edge --browser_version=latest --browserstack.local=false --browserstack.selenium_version=3.5.2 --server=http://hub-cloud.browserstack.com/wd/hub`
-
-This example will run on a real iPhone12 Pro with iOS 14
-
-`node_modules/gulp/bin/gulp.js functional --browserstack.user=XXXXXXXX --browserstack.key=XXXXXXXX  --os_version 14 --device="iPhone 12 Pro" --real_mobile=true --browserstack.local=false --resolution= --browserstack.selenium_version=3.5.2 --server=http://hub-cloud.browserstack.com/wd/hub`
+`yarn browserstack_staging_win10_edge`
 
 ### More
 
-To get a full list of options run:
-
-`node_modules/gulp/bin/gulp.js functional --options`
+To get a full list of options for browserstack consult the capabilities page [here](https://www.browserstack.com/automate/capabilities)

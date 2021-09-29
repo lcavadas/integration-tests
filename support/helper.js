@@ -27,12 +27,6 @@ module.exports = {
     });
 
     capabilities.build = `${capabilities.commit} on ${capabilities.os}: ${capabilities.os_version} - ${capabilities.browser}: ${capabilities.browser_version}`
-    // console.log('Options:');
-    // console.log('\t baseUrl: Specify the url against which to run the tests. Defaults to --url=https://frontend-stg.vercel.app');
-    // console.log('\t seleniumServerAddress: Specify the url of the selenium server to use to run the tests (e.g. http://hub-cloud.browserstack.com/wd/hub). Defaults to --server=http://localhost:4444/wd/hub');
-    // console.log('\t browserName: Specify the browser to use. e.g. --browserName=chrome (default), --browserName==firefox');
-    // console.log('\t [X] [Y]: Specifies the capability [X] with value [Y] for the browser:');
-    // console.log('\t\t For a comprehensive list of the valid properties go to https://www.browserstack.com/automate/capabilities');
   },
   getDriver: () => {
     let builder = new webDriver.Builder()
