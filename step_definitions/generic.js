@@ -33,7 +33,7 @@ After(({result}) => {
 
 When(/^I navigate to '(.*?)'$/, {timeout: 60000}, helper.goTo);
 
-When(/^I enter '(.*?)' into '(.*?)'$/, helper.sendToInput);
+When(/^I enter '(.*?)' into '(.*?)'$/, {timeout: 10000}, helper.sendToInput);
 
 When(/^I enter '(.*?)' into '(.*?)' like a human$/, {timeout: 60000}, helper.sendToInputSlow);
 
@@ -59,7 +59,7 @@ When(/^I wait for '(.*?)' to go away$/, {timeout: 360000}, helper.waitForReady);
 
 When(/^I wait for '(.*?)' to show up$/, {timeout: 360000}, helper.waitForElement);
 
-When(/^I take a snapshot called '(.*?)'$/, helper.snapshot);
+When(/^I take a snapshot called '(.*?)'$/, {timeout: 10000}, helper.snapshot);
 
 When(/^I should see the text '(.*?)' in '(.*?)'$/, helper.assertText);
 
@@ -115,7 +115,7 @@ When(/^I fill in the test address details$/, {timeout: 30000}, function (next) {
   });
 });
 
-Given(/^There is an order on '(.*?)' with$/, {timeout: 30000}, function (slug, table, next) {
+Given(/^There is an order on '(.*?)' with$/, {timeout: 60000}, function (slug, table, next) {
   helper.goTo(process.env.ADMIN_URL, () => {
     driver.manage().addCookie({
       name: "auth-token",
@@ -146,6 +146,7 @@ Given(/^There is an order on '(.*?)' with$/, {timeout: 30000}, function (slug, t
                                   if (pos < data.length) {
                                     addProduct();
                                   } else {
+                                    driver.sleep(2000);
                                     helper.waitForLoadingReady(next);
                                   }
                                 });

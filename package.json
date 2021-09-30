@@ -16,15 +16,14 @@
     "staging_firefox": "yarn start_selenium ; sleep 1 && cucumber-js --require step_definitions/**/*.js -f node_modules/cucumber-pretty features/**/*.feature --world-parameters \"$(jq -s add worlds/staging_firefox.json)\" ; yarn stop_selenium",
     "local": "yarn local_chrome",
     "staging": "yarn staging_chrome",
-    "browserstack_staging_win10_chrome": "yarn generateCommit && cucumber-js --require step_definitions/**/*.js -f node_modules/cucumber-pretty features/**/*.feature --world-parameters \"$(jq -s add worlds/browserstack/commit.json worlds/browserstack/staging_win10_chrome.json)\"",
+    "browserstack_staging_win10_chrome": "yarn generateCommit && percy exec -- cucumber-js --require step_definitions/**/*.js -f node_modules/cucumber-pretty features/**/*.feature --world-parameters \"$(jq -s add worlds/browserstack/commit.json worlds/browserstack/staging_win10_chrome.json)\"",
     "browserstack_staging_win10_firefox": "yarn generateCommit && cucumber-js --require step_definitions/**/*.js -f node_modules/cucumber-pretty features/**/*.feature --world-parameters \"$(jq -s add worlds/browserstack/commit.json worlds/browserstack/staging_win10_firefox.json)\"",
     "browserstack_staging_win10_edge": "yarn generateCommit && cucumber-js --require step_definitions/**/*.js -f node_modules/cucumber-pretty features/**/*.feature --world-parameters \"$(jq -s add worlds/browserstack/commit.json worlds/browserstack/staging_win10_edge.json)\"",
     "browserstack_staging_macos_chrome": "yarn generateCommit && cucumber-js --require step_definitions/**/*.js -f node_modules/cucumber-pretty features/**/*.feature --world-parameters \"$(jq -s add worlds/browserstack/commit.json worlds/browserstack/staging_macos_chrome.json)\"",
     "browserstack_staging_macos_firefox": "yarn generateCommit && cucumber-js --require step_definitions/**/*.js -f node_modules/cucumber-pretty features/**/*.feature --world-parameters \"$(jq -s add worlds/browserstack/commit.json worlds/browserstack/staging_macos_firefox.json)\"",
     "browserstack_staging_macos_edge": "yarn generateCommit && cucumber-js --require step_definitions/**/*.js -f node_modules/cucumber-pretty features/**/*.feature --world-parameters \"$(jq -s add worlds/browserstack/commit.json worlds/browserstack/staging_macos_edge.json)\"",
     "browserstack_staging_macos_safari": "yarn generateCommit && cucumber-js --require step_definitions/**/*.js -f node_modules/cucumber-pretty features/**/*.feature --world-parameters \"$(jq -s add worlds/browserstack/commit.json worlds/browserstack/staging_macos_safari.json)\"",
-    "browserstack_staging": "yarn staging_win10_chrome && yarn staging_win10_firefox && yarn staging_win10_edge && yarn staging_macos_chrome && yarn staging_macos_firefox && yarn staging_macos_safari",
-    "ci": "./generateCommitJson.sh && PERCY_TOKEN=613aac074171cc0e7fb48de1f17eb8cde19970fd90cf9a114726cda71a1ec6c3 percy exec -- cucumber-js --require step_definitions/**/*.js -f node_modules/cucumber-pretty features/**/*.feature --world-parameters \"$(jq -s add worlds/browserstack/commit.json worlds/ci.json)\""
+    "browserstack_staging_all": "yarn browserstack_staging_win10_chrome && yarn browserstack_staging_win10_firefox && yarn browserstack_staging_win10_edge && yarn browserstack_staging_macos_chrome && browserstack_yarn staging_macos_firefox && yarn browserstack_staging_macos_safari"
   },
   "license": "UNLICENSED",
   "jshintConfig": {

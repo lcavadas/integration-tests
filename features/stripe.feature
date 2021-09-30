@@ -61,23 +61,6 @@ Feature: Stripe
     And I should see notification with 'Your card's security code is incorrect.'
     And I take a snapshot called 'Stripe: Failed payment with declined with cvc_check'
 
-  Scenario: Failed payment with declined with card_declined
-    Given I navigate to '/tickets/attendees'
-    And I click 'Accept Cookies'
-    And I click 'GA - Book Me'
-    And I fill in the test customer details
-    And I click 'Payment -> Pay with stripe'
-    And I enter '4000000000000002' into 'Payment -> Card number' like a human
-    And I enter '0130' into 'Payment -> Expiry date' like a human
-    And I enter '123' into 'Payment -> CVV' like a human
-    And I click 'Payment -> Accept T&Cs'
-    When I click 'Payment -> Pay securely now'
-    And I wait for 'Payment Loader' to show up
-    And I wait for 'Payment Loader' to go away
-    Then I wait for 'Notification' to show up
-    And I should see notification with 'Your card was declined.'
-    And I take a snapshot called 'Stripe: Failed payment with declined with card_declined'
-
   Scenario: Failed payment with declined with insufficient_funds
     Given I navigate to '/tickets/attendees'
     And I click 'Accept Cookies'

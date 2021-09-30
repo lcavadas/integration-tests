@@ -216,6 +216,29 @@ module.exports = {
       next(new Error('Element "' + selector + '" was not found'));
     });
   },
+  clearInput: (selector, next) => {
+    let realSelector = module.exports.getSelectorMapping(selector);
+    if (realSelector.indexOf('iframe') !== -1) {
+      let parts = realSelector.split('iframe');
+      let frame = parts.splice(0, 1)[0] + 'iframe';
+      let remainder = parts.join('iframe');
+      driver.findElement(webDriver.By.css(frame)).then(function (iframe) {
+        driver.switchTo().frame(iframe).then(() => module.exports.clearInput(text, remainder, () => {
+          driver.switchTo().defaultContent().then(next);
+        }));
+      })
+    }
+    // console.log('Clear text with CTRL+A -> BACKSPACE on "' + selector + '"');
+    driver.findElement(webDriver.By.css(realSelector)).then(function (element) {
+      // console.log('\tElement found, sending CTRL+A');
+      element.sendKeys(webDriver.Key.chord(webDriver.Key.CONTROL, "a")).then(function () {
+        // console.log('\tCTRL+A done, sending BACKSPACE');
+        element.sendKeys(webDriver.Key.BACK_SPACE).then(next);
+      });
+    }, function () {
+      next(new Error('Element "' + selector + '" was not found'));
+    });
+  },
   clickElement: (selector, next) => {
     // console.log('Clicking ' + selector);
     let clickIt = function (el, retry) {
@@ -437,7 +460,7 @@ module.exports = {
     console.log('debugger');
   },
   snapshot: (title, next) => {
-    if (process.env.PERCY_TOKEN) {
+    if (capabilities.percy) {
       percySnapshot(driver, title).then(next).catch(driver.takeScreenshot());
     } else {
       driver.takeScreenshot().then((image) => {
