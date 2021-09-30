@@ -4,7 +4,6 @@ Feature: Test
     Given There is an order on 'ws21' with
       | quantity | product          |
       | 1        | General Attendee |
-    And I wait for 'Customer details' to show up
     And I fill in the test address details
     And I click 'Payment -> Pay with stripe'
     And I enter '4242424242424242' into 'Payment -> Card number' like a human

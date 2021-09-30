@@ -26,7 +26,8 @@ module.exports = {
       capabilities[arg] = worldConfig[arg];
     });
 
-    capabilities.build = `${capabilities.commit} on ${capabilities.os}: ${capabilities.os_version} - ${capabilities.browser}: ${capabilities.browser_version}`
+    let now = new Date();
+    capabilities.build = `${now.toUTCString()}: ${capabilities.commit} on ${capabilities.os} ${capabilities.os_version} - ${capabilities.browser}_${capabilities.browser_version}`
   },
   getDriver: () => {
     let builder = new webDriver.Builder()
@@ -341,35 +342,36 @@ module.exports = {
     let url = site.startsWith('http') ? site : baseUrl + (site || '');
 
     // console.log('Navigating to', url);
-    driver.get(url).then(function () {
-      let selector = next;
-      let next1;
-      driver.sleep(2500);
-      if (!next1) {
-        next1 = selector;
-        selector = '.loading';
-      }
-      // console.log('Waiting for ', selector, ' to go away');
-      driver.wait(function () {
-        return driver.findElement(webDriver.By.css(module.exports.getSelectorMapping(selector))).then(function (el) {
-          return el.isDisplayed().then(function (displayed) {
-            if (!displayed) {
-              // console.log('Loading is complete');
-              driver.sleep(100).then(next1);
-              return true;
-            }
-          }, function () {
-            // console.log('Loading is complete');
-            driver.sleep(100).then(next1);
-            return true;
-          });
-        }, function () {
-          // console.log('Loading is complete');
-          driver.sleep(100).then(next1);
-          return true;
-        });
-      }, 360000);
-    });
+    driver.get(url).then(next);
+    // driver.get(url).then(function () {
+    //   let selector = next;
+    //   let next1;
+    //   driver.sleep(2500);
+    //   if (!next1) {
+    //     next1 = selector;
+    //     selector = '.loading';
+    //   }
+    //   // console.log('Waiting for ', selector, ' to go away');
+    //   driver.wait(function () {
+    //     return driver.findElement(webDriver.By.css(module.exports.getSelectorMapping(selector))).then(function (el) {
+    //       return el.isDisplayed().then(function (displayed) {
+    //         if (!displayed) {
+    //           // console.log('Loading is complete');
+    //           driver.sleep(100).then(next1);
+    //           return true;
+    //         }
+    //       }, function () {
+    //         // console.log('Loading is complete');
+    //         driver.sleep(100).then(next1);
+    //         return true;
+    //       });
+    //     }, function () {
+    //       // console.log('Loading is complete');
+    //       driver.sleep(100).then(next1);
+    //       return true;
+    //     });
+    //   }, 360000);
+    // });
   },
   nil: () => {
   },

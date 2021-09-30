@@ -147,7 +147,7 @@ Given(/^There is an order on '(.*?)' with$/, {timeout: 60000}, function (slug, t
                                     addProduct();
                                   } else {
                                     driver.sleep(2000);
-                                    helper.waitForLoadingReady(next);
+                                    helper.waitForElement('Customer details', next);
                                   }
                                 });
                               });
