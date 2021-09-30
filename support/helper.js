@@ -26,8 +26,8 @@ module.exports = {
       capabilities[arg] = worldConfig[arg];
     });
 
-    let now = new Date();
-    capabilities.build = `${now.toUTCString()}: ${capabilities.commit} on ${capabilities.os} ${capabilities.os_version} - ${capabilities.browser}_${capabilities.browser_version}`
+    let buildId = process.env.BUILD_ID || `${new Date().toUTCString()}: ${capabilities.commit}`;
+    capabilities.build = `${buildId} on ${capabilities.os} ${capabilities.os_version} - ${capabilities.browser}_${capabilities.browser_version}`
   },
   getDriver: () => {
     let builder = new webDriver.Builder()
@@ -86,35 +86,6 @@ module.exports = {
       }, function () {
         // console.log('Loading is complete');
         driver.sleep(100).then(next);
-        return true;
-      });
-    }, 360000);
-  },
-  waitForLoadingReady: (next) => {
-    let selector = next;
-    let next1;
-    driver.sleep(2500);
-    if (!next1) {
-      next1 = selector;
-      selector = '.loading';
-    }
-    // console.log('Waiting for ', selector, ' to go away');
-    driver.wait(function () {
-      return driver.findElement(webDriver.By.css(module.exports.getSelectorMapping(selector))).then(function (el) {
-        return el.isDisplayed().then(function (displayed) {
-          if (!displayed) {
-            // console.log('Loading is complete');
-            driver.sleep(100).then(next1);
-            return true;
-          }
-        }, function () {
-          // console.log('Loading is complete');
-          driver.sleep(100).then(next1);
-          return true;
-        });
-      }, function () {
-        // console.log('Loading is complete');
-        driver.sleep(100).then(next1);
         return true;
       });
     }, 360000);

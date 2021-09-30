@@ -53,8 +53,6 @@ When(/^I should see (\d+?) '(.*?)'$/, helper.countElements);
 
 When(/^I hit '(.*?)' on '(.*?)'$/, helper.sendKeyToInput);
 
-When(/^I wait for the page to load$/, {timeout: 360000}, helper.waitForLoadingReady);
-
 When(/^I wait for '(.*?)' to go away$/, {timeout: 360000}, helper.waitForReady);
 
 When(/^I wait for '(.*?)' to show up$/, {timeout: 360000}, helper.waitForElement);
